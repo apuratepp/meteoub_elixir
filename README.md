@@ -5,4 +5,6 @@ MeteoubElixir
 
 ## Test
 
-  mix test
+```
+mix test
+```

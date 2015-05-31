@@ -3,10 +3,15 @@ require IEx
 defmodule MeteoubElixirTest do
   use ExUnit.Case
 
-  @tag timeout: 60_000 # 60 ms
+  @tag timeout: 1_000_000
 
-  test "fetch weather data" do
-    response = MeteoubElixir.fetch_weather_data
+  test "fetch_weather_data" do
+    response = MeteoubElixir.fetch_data
     assert 200 == response.status_code
+  end
+
+  test "splitted_data" do
+    list = MeteoubElixir.splitted_data
+    assert is_list(list)
   end
 end

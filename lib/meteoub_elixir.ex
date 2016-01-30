@@ -1,7 +1,9 @@
 defmodule MeteoubElixir do
+  @data_url "http://infomet.am.ub.es/campbell/www.dat"
+
   def fetch do
     HTTPotion.start
-    HTTPotion.get("http://infomet.am.ub.es/campbell/www.dat")
+    HTTPotion.get(@data_url)
   end
 
   def split do

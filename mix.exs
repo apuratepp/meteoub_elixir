@@ -4,7 +4,7 @@ defmodule MeteoubElixir.Mixfile do
   def project do
     [app: :meteoub_elixir,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.1",
      deps: deps]
   end
 
@@ -26,9 +26,9 @@ defmodule MeteoubElixir.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.1" },
-      { :httpotion, "~> 2.0.0" },
-      { :extwitter, "~> 0.4.0" }
+      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.2.2" },
+      { :httpotion, "~> 2.1.0" },
+      { :extwitter, "~> 0.6.1" }
     ]
   end
 end

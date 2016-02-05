@@ -28,7 +28,8 @@ defmodule MeteoubElixir.Mixfile do
     [
       { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.2.2" },
       { :httpotion, "~> 2.1.0" },
-      { :extwitter, "~> 0.6.1" }
+      { :extwitter, "~> 0.6.2" },
+      { :timex, "~> 1.0.0" }
     ]
   end
 end

@@ -38,4 +38,32 @@ defmodule MeteoubElixir do
   def parse do
     Enum.zip(@keys, split)
   end
+
+  def formatted_datetime do
+    MUBDateFormatter.format_time(parse[:date], parse[:time])
+  end
+
+  def formatted_sunrise do
+    MUBDateFormatter.format_time(parse[:date], parse[:sunrise])
+  end
+
+  def formatted_sunset do
+    MUBDateFormatter.format_time(parse[:date], parse[:sunset])
+  end
+
+  def temperature_average do
+    parse[:temperature_average]
+  end
+
+  def humidity_average do
+    parse[:humidity_average]
+  end
+
+  def pressure_average do
+    parse[:pressure_average]
+  end
+
+  def message do
+    "Dades a les #{formatted_datetime}: #{temperature_average}ºC, #{humidity_average}%, #{pressure_average} hPa // Sortida del Sol: #{formatted_sunrise}, posta: #{formatted_sunset}"
+  end
 end

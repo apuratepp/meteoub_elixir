@@ -3,4 +3,3 @@ elixir:
   - 1.1.0
 env:
   - METEOUB_URI=https://raw.githubusercontent.com/apuratepp/meteoub_elixir/master/www.dat
-before: python -m SimpleHTTPServer

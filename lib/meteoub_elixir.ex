@@ -1,7 +1,5 @@
 defmodule MeteoubElixir do
-  @data_url "http://infomet.am.ub.es/campbell/www.dat"
-  @keys [
-          :date,
+  @keys [ :date,
           :time,
           :temperature_min,
           :temperature_max,
@@ -26,44 +24,44 @@ defmodule MeteoubElixir do
           :is_it_raining?
         ]
 
-  def fetch do
+  defp request do
     HTTPotion.start
-    HTTPotion.get(@data_url)
+    HTTPotion.get(System.get_env("METEOUB_URI"))
   end
 
-  def split do
-    fetch.body |> String.split("\n")
+  defp body(request) do
+    request.body
   end
 
-  def parse do
+  defp handle(body) do
+    split = body |> String.split("\n")
     Enum.zip(@keys, split)
   end
 
-  def formatted_datetime do
-    MUBDateFormatter.format_time(parse[:date], parse[:time])
+  defp parse(results) do
+    datetime = MUBDateFormatter.format_time(results[:date], results[:time])
+    sunrise  = MUBDateFormatter.format_time(results[:date], results[:sunrise])
+    sunset   = MUBDateFormatter.format_time(results[:date], results[:sunset])
+    additional = [
+      { :datetime, datetime },
+      { :sunrise_datetime, sunrise },
+      { :sunset_datetime, sunset }
+    ]
+    results ++ additional
   end
 
-  def formatted_sunrise do
-    MUBDateFormatter.format_time(parse[:date], parse[:sunrise])
+  def results do
+    request |> body |> handle |> parse
   end
 
-  def formatted_sunset do
-    MUBDateFormatter.format_time(parse[:date], parse[:sunset])
-  end
+  def message(results) do
+    datetime = results[:datetime]
+    temperature = results[:temperature_average]
+    humidity = results[:humidity_average]
+    pressure = results[:pressure_average]
+    sunrise = results[:sunrise_datetime]
+    sunset = results[:sunset_datetime]
 
-  def temperature_average do
-    parse[:temperature_average]
-  end
-
-  def humidity_average do
-    parse[:humidity_average]
-  end
-
-  def pressure_average do
-    parse[:pressure_average]
-  end
-
-  def message do
-    "Dades a les #{formatted_datetime}: #{temperature_average}ºC, #{humidity_average}%, #{pressure_average} hPa // Sortida del Sol: #{formatted_sunrise}, posta: #{formatted_sunset}"
+    "Dades a les #{datetime}: #{temperature}ºC, #{humidity}%, #{pressure} hPa // Sortida del Sol: #{sunrise}, posta: #{sunset}"
   end
 end
